@@ -1,0 +1,9 @@
+*~
+*.log
+
+LICENSE
+Makefile
+README.md
+
+id_rsa*
+

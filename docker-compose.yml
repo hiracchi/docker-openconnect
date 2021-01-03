@@ -1,0 +1,19 @@
+version: "3"
+services:
+    openconnect:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                - ROOT_PASSWORD=${ROOT_PASSWORD:-root}
+        user: "${USER_ID:-501}:${GROUP_ID:-20}"
+        ports:
+            - '2222:22'
+        # restart: always
+        cap_add:
+          - NET_ADMIN
+        environment:
+            OPENCONNECT_USER: ${OPENCONNECT_USER:-user}
+            OPENCONNECT_PASSWORD: ${OPENCONNECT_PASSWORD:-password}
+            OPENCONNECT_SERVER: ${OPENCONNECT_SERVER:-server}
+
