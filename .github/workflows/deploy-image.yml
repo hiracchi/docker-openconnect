@@ -4,6 +4,8 @@ on:
     branches: ["main"]
 jobs:
   docker:
+    env:
+      ROOT_PASSWORD: root
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
