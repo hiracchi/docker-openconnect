@@ -8,12 +8,11 @@ services:
                 - ROOT_PASSWORD=${ROOT_PASSWORD:-root}
         user: "${USER_ID:-501}:${GROUP_ID:-20}"
         ports:
-            - '2222:22'
+          - '2222:22'
+        volumes:
+          - "./work:/home/docker"
         # restart: always
         cap_add:
           - NET_ADMIN
-        environment:
-            OPENCONNECT_USER: ${OPENCONNECT_USER:-user}
-            OPENCONNECT_PASSWORD: ${OPENCONNECT_PASSWORD:-password}
-            OPENCONNECT_SERVER: ${OPENCONNECT_SERVER:-server}
-
+        env_file:
+          - openconnect.env

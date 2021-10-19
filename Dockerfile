@@ -1,18 +1,11 @@
-FROM hiracchi/ubuntu-ja:arm64-latest
-
-ARG BUILD_DATE
-ARG VCS_REF
-ARG VERSION
-LABEL org.label-schema.build-date=$BUILD_DATE \
-  org.label-schema.vcs-ref=$VCS_REF \
-  org.label-schema.vcs-url="https://github.com/hiracchi/docker-ubuntu-ja" \
-  org.label-schema.version=$VERSION
+FROM ghcr.io/hiracchi/ubuntu
 
 ARG ROOT_PASSWORD
 
 # -----------------------------------------------------------------------------
 # base settings
 # -----------------------------------------------------------------------------
+USER root
 RUN set -x && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
@@ -38,10 +31,10 @@ RUN set -x && \
 # -----------------------------------------------------------------------------
 # ssh key
 # -----------------------------------------------------------------------------
-USER ${USER_NAME}
+USER ${USER_NAME}:${GROUP_NAME}
 RUN set -x && \
-  ssh-keygen -m PEM -t rsa -b 1024 -C "${USER_NAME}@localhost" -N "" -f ${HOME}/.ssh/id_rsa && \
-  cat ${HOME}/.ssh/id_rsa.pub >> ${HOME}/.ssh/authorized_keys
+  ssh-keygen -m PEM -t rsa -b 1024 -C "${USER_NAME}@localhost" -N "" -f /home/${USER_NAME}/.ssh/id_rsa && \
+  cat /home/${USER_NAME}/.ssh/id_rsa.pub >> /home/${USER_NAME}/.ssh/authorized_keys
 
 USER root
 RUN set -x && \
@@ -54,7 +47,10 @@ RUN set -x && \
 # -----------------------------------------------------------------------------
 USER root
 COPY scripts/* /usr/local/bin/
+RUN set -x && \
+  mkdir /data
 
 WORKDIR /home/${USER_NAME}
+EXPOSE 22
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["sudo", "/usr/sbin/sshd", "-D"]
