@@ -1,6 +1,6 @@
 FROM ghcr.io/hiracchi/docker-ubuntu
 
-ARG ROOT_PASSWORD
+ARG ROOT_PASSWORD="root"
 
 # -----------------------------------------------------------------------------
 # base settings
