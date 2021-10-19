@@ -1,4 +1,4 @@
-FROM ghcr.io/hiracchi/ubuntu
+FROM ghcr.io/hiracchi/docker-ubuntu
 
 ARG ROOT_PASSWORD
 
