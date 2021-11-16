@@ -1,18 +1,19 @@
 version: "3"
 services:
-    openconnect:
-        build:
-            context: .
-            dockerfile: Dockerfile
-            args:
-                - ROOT_PASSWORD=${ROOT_PASSWORD:-root}
-        user: "${USER_ID:-501}:${GROUP_ID:-20}"
-        ports:
-          - '2222:22'
-        volumes:
-          - "./work:/home/docker"
-        # restart: always
-        cap_add:
-          - NET_ADMIN
-        env_file:
-          - openconnect.env
+  openconnect:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ROOT_PASSWORD=${ROOT_PASSWORD:-root}
+    image: ghcr.io/hiracchi/docker-openconnect:latest
+    user: "${USER_ID:-501}:${GROUP_ID:-20}"
+    ports:
+      - '2222:22'
+    volumes:
+      - "./data:/data"
+    # restart: always
+    cap_add:
+      - NET_ADMIN
+    # env_file:
+    #   - openconnect.env

@@ -1,16 +1,19 @@
 USER_ID := $(shell id -u)
 GROUP_ID := $(shell id -g)
 
+
 .PHONY: build start stop restart term logs
 
 build:
+	export USER_ID=$(USER_ID); \
+	export GROUP_ID=$(GROUP_ID); \
 	docker-compose build
 
 
 start:
 	@echo "start docker as ${USER_ID}:${GROUP_ID}"
-	export USER_ID=$(USER_ID) 
-	export GROUP_ID=$(GROUP_ID) 
+	export USER_ID=$(USER_ID); \
+	export GROUP_ID=$(GROUP_ID); \
 	docker-compose up -d 
 
 
@@ -26,6 +29,7 @@ logs:
 
 
 copy_ssh_key:
-	docker-compose exec openconnect cat /home/docker/.ssh/id_rsa.pub > id_rsa_docker
+	docker-compose exec openconnect cat /home/docker/.ssh/id_rsa > id_rsa_docker
 	chmod 600 id_rsa_docker
+	cp id_rsa_docker ${HOME}/.ssh/
 

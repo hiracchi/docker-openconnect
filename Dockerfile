@@ -36,11 +36,11 @@ RUN set -x && \
   ssh-keygen -m PEM -t rsa -b 1024 -C "${USER_NAME}@localhost" -N "" -f /home/${USER_NAME}/.ssh/id_rsa && \
   cat /home/${USER_NAME}/.ssh/id_rsa.pub >> /home/${USER_NAME}/.ssh/authorized_keys
 
-USER root
-RUN set -x && \
-  chown -R "${USER_NAME}:${GROUP_NAME}" /home/${USER_NAME} && \
-  ls -al /home/${USER_NAME} && \
-  cp "/home/${USER_NAME}/.ssh/id_rsa" ${HOME}/ssh-user.pem
+# USER root
+# RUN set -x && \
+#   chown -R "${USER_NAME}:${GROUP_NAME}" /home/${USER_NAME} && \
+#   ls -al /home/${USER_NAME} && \
+#   cp "/home/${USER_NAME}/.ssh/id_rsa" ${HOME}/ssh-user.pem
 
 # -----------------------------------------------------------------------------
 # entrypoint
